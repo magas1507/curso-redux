@@ -1,0 +1,54 @@
+***REDUX: Libreria nos ayuda a manejar de mejor manera 
+el estado de nuestra aplicación. Para usarlos se necesita:
+
+    Dónde almacenar: Store
+    Cómo acceder: Mediantes métodos, ejempo: selectores.
+    Cómo actualizar: Disparadores, actions ó reducers.
+    
+    Consta de tres principios:
+
+      -Única fuente de verdad (store)
+      -El estado es de solo lectura, no modificarlo directamente sino 
+      atraves de actions.
+      -Los cambios deben realizarse através de funciones puras (reducers)
+    
+    Funciones Puras caractesristicas:
+      Valor de entrada cambia si la entrada cambia.
+      -Misma entrada, misma salida.
+      -No tener lógica síncrona
+
+
+
+***¿Qué es Redux? -> 
+  Es una librería que nos ayuda a manejar el estado de nuestra aplicación.
+
+  *Necesitamos 3 cosas:
+
+    Dónde almancenar la información
+    Cómo acceder a ella
+    Cómo actualizarla
+    
+  *Redux está basado en 3 principios:
+
+    -Hay solo una única fuente de verdad (store) => La diferencia entre 
+      State y Store es que 
+      -State es un objeto de tipo ‘clave: valor’ (aunque puede ser de otros 
+        tipos). 
+      -El Store contiene al State y a otras cosas.
+      -El estado es de solo lectura (solo se actualiza con actions). 
+        No debemos modificarlo directamente.
+      -Los cambios deben realizarse a través de funciones puras (reducers).
+
+  *Funciones puras
+
+    -Valor retornado cambia si la entrada cambia.
+    -Misma entrada, misma salida.
+    -Sin efectos colaterales
+
+  *Entrada: x -> Función Pura: f -> Salida: F(x)
+
+  *Reducers
+
+    -Calcular el nuevo estado basado en los parámetros (state, action).
+    -No modificar el estado directamente.
+    -No tener lógica asíncrona.
