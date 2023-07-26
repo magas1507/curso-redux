@@ -52,3 +52,109 @@ el estado de nuestra aplicación. Para usarlos se necesita:
     -Calcular el nuevo estado basado en los parámetros (state, action).
     -No modificar el estado directamente.
     -No tener lógica asíncrona.
+
+***CICLO DE VIDA REDUX
+    -Despacho de una acción: Un evento de UI, una respuesta de red o 
+      cualquier otra fuente despacha una acción, que es un objeto de 
+      JavaScript simple que describe el cambio a realizar.
+
+    -Actualización del almacén: El almacén de Redux recibe la acción 
+      despachada y la pasa a la función reductora. El reductor calcula 
+      el nuevo estado en base al estado actual y la acción.
+
+    -Actualización de los componentes: El almacén emite un evento de 
+      cambio, lo que hace que los componentes que están suscritos al 
+      almacén vuelvan a renderizarse. El nuevo estado está disponible 
+      en el almacén y puede ser utilizado por los componentes para 
+      renderizar la UI actualizada.
+
+    -El usuario interactúa con la UI actualizada: El usuario interactúa 
+      con la UI actualizada, potencialmente provocando otro despacho de 
+      acción. Esto comienza el ciclo nuevamente.
+
+    -Nota: Es importante recordar que el estado debe tratarse como 
+      inmutable y no modificarse directamente. Se deben crear nuevos 
+      estados para reflejar los cambios.
+
+      1)state define UI
+      2)en la UI el usuario dispara una acción
+      3)la acción es mandada al reducer
+      4)el reducer actualiza el store
+      5)el store contiene al state
+     
+      6)volvemos al paso 1
+ ***Diferencias entre Redux y Context****
+
+    > “*Cuando un sistema es opaco y no determinista, es dífícil reproducir
+     errores o agregar nuevas características.”
+    **~Redux Docs***
+    > 
+
+    En React el paso de datos entre padres e hijos se realiza a través de 
+    las *props*. Probablemente para un componente padre que tiene un solo 
+    nivel de hijos este paso de datos se realice de forma sencilla, pero, 
+    
+    ¿Qué pasa si aumentan los niveles de profundidad y necesito pasarle 
+    datos a un hijo en el nivel muy profundo? 🤔 
+    
+    Debemos pasar los *props* entre componentes hijos para que pueda 
+    llegar a su destino provocando que existan componentes con *props* 
+    que probablemente no necesitan.
+
+    Este problema se le conoce como ***prop drilling*** y ocasiona que el estado se vuelva mucho mas díficil de mantener.
+
+    Debido a este problema entonces nace Redux ya que facilita el manejo 
+    del estado y hace que éste sea mas predecible y traceable. 
+    Sin embargo, como otra alternativa para solucionar este problema 
+    tenemos Context API de React pero antes de hablar de sus diferencias 
+    echemos un vistazo general a este concepto.
+
+    **Context API**
+
+      -Es una herramienta que nos permite pasar datos de componentes padre 
+      a hijos sin tener que pasar por todos los componentes hijos ubicados 
+      en los distintos niveles. 
+      Fue diseñado para compartir los datos que son considerados “Globales”.
+
+      -Podemos usar esta herramienta para el uso de datos que no cambian 
+      constantemente a lo largo de nuestra aplicación: Modo (Oscuro o Claro),
+       Usuario autenticado o Idioma (Inglés o Español).
+
+      -Disponible a partir de la versión **16.3** de React
+
+    **Redux vs. Context API**
+    Diferencias entre Redux y Context
+
+  Redux facilita el manejo del estado y lo hace mas predecible 
+  y rastreable.
+
+  –React propone Context API:
+
+    *Proporciona una forma de pasar datos de los componentes padres a los 
+    componentes hijos mediante el arbol de componentes sin pasar manualmente
+    por todos los niveles.
+    *Está diseñado para compartir los datos que pueden ser considerados 
+    globales.
+    *Podemos usarlo cuando vamos a hacer uso de datos que generalmente 
+    no cambiarán mucho a lo largo del uso de la app. Como el modo, 
+    tema, idioma o usuario autentificado.
+    
+    *Se puede usar a partir de la versión 16.3 de React.
+–Redux vs Context API
+
+  *Depuración: Con el depurador de Redux podemos “viajar en el tiempo” en 
+  cambio Context API al tener conectado todo al mismo provider es más 
+  dificil de depurar.
+  
+  *Bundle Size: Context viene integrado y no necesitas librerias adicionales.
+   Con redux, si, por lo que crece el bundle size de la app.
+  
+  *Middlewares: Redux tiene una forma sencilla de extender la funcionabilidad 
+  de nuestros triggers o distpachers que nos permite agregar middlewares que
+  atajen la data en cierto punto antes de que llegue a cambiar el estado.
+  
+  *Curva de aprendizaje: Context API tiene una curva de aprendizaje más 
+  ligera. Con redux tenemos que aprender un nuevo paradigma, 
+  entender el ciclo de vida de los datos y aprender sobre la sintaxis.
+  
+  *Rendering: Redux nos permite prevenir renders innecesarios.
