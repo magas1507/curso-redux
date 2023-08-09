@@ -158,7 +158,21 @@ el estado de nuestra aplicación. Para usarlos se necesita:
   entender el ciclo de vida de los datos y aprender sobre la sintaxis.
   
   *Rendering: Redux nos permite prevenir renders innecesarios.
+  
+  *"connet":connect" es una función proporcionada por la biblioteca 
+  "react-redux" que se utiliza para conectar componentes de React a un 
+  store de Redux. 
 
+    -puedes usar la función "connect" para conectar tus componentes de 
+    React al estado almacenado en el store de Redux. 
+    
+    -Esto permite que los componentes accedan al estado global y también 
+    les proporciona la capacidad de despachar acciones para modificar ese
+     estado.
+
+    -La función "connect" toma como argumentos dos funciones: 
+      -"mapStateToProps" y 
+      -"mapDispatchToProps":
 
   ***8-integración de Redux-
   1) creammos la carpeta actions
@@ -221,4 +235,30 @@ el estado de nuestra aplicación. Para usarlos se necesita:
     14) pasamos las props al App(pokemos, setPokemons).         
 
 
+**9.-Hooks vs. Connect
+
+  *useSelector vs Connect
+
+    -Boilerplate: Nos ahorramos codigo usando hooks.
     
+    -Separación de responsabilidades: Connect el metodo crea un componente 
+    de orden mayor que es quien renderiza el componente y le pasa el 
+    estado y action a través de los props.
+    
+    -Testing: Es más fácil hacer testing con connect ya que recibe el 
+    estado por los props y solo se envían props, en cambio con los hooks
+    tendremos que conectar el componente a redux antes de testear.
+
+    Redux recomienda usar su Hooks API.
+
+    Hooks API
+
+    *useSelector: nos permite extraer la data del estado a traves de una 
+    funcion selectora (que debe ser pura), es equivalente al 
+    mapstatetoprops, solo que el valor se guarda en una variable. 
+    
+      -El selector sera llamado cada que se haga distpatch de una acción 
+      para evaluar si se renderiza de nuevo un componente.
+    
+    *useDispatch: nos retorna una referencia del dispatcher del store de 
+    redux el cual usamos para disparar acciones.
