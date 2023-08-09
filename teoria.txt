@@ -158,3 +158,67 @@ el estado de nuestra aplicación. Para usarlos se necesita:
   entender el ciclo de vida de los datos y aprender sobre la sintaxis.
   
   *Rendering: Redux nos permite prevenir renders innecesarios.
+
+
+  ***8-integración de Redux-
+  1) creammos la carpeta actions
+  2) Creamos los types: de esta forma evitamos errores
+  3) luego en el index
+      -creamos nuestros actions creator: es una función que retorna un 
+        action, es decir, un objeto que describe el cambio que va a pasar 
+  4) setPokemons:  esta es una función y va a recibir nuestro payload.
+
+        -Pero ¿cuál va a ser nuestro payload? Los nuevos pokemones.
+          le puedes poner pokemons y enviar un objeto. 
+          -Por simplicidad, vamos a llamarle acá payload 
+
+  5) Ahora en App.js conectamos con Redux importando esta propiedad de 
+    Redux llamada connect
+
+      -connect 
+  6) Vamos a tener dos variables.
+
+      - mapStateToProps: es una función recibe nuestro estado y retorna un 
+        objeto cuyas propiedades van a ser enviadas a las props del 
+        componente que se está conectado a redux.
+      
+      - mapDispatchToProps es una función que recibe el dispatcher de redux 
+        y retorna un objeto que será mapedo a las propiedades con los action
+        creators
+          En setPokemonsActions nos falta una cosa, y es en dónde estan los
+          Valores que le vamos a pasar? 
+          Dónde está la lista que estamos obteniendo de la API,
+          - Por ende vamos agregar un parámetro que sea Value
+          -Retornamos ese dispatch, le vamos a pasar Value.
+          -Recuerda que llegara como payload al Action Creator
+    7)conectamos MapStateToProps y luego MapStateDispatchToProps,      
+    8) Ahora dónde está nuestro Reducers?
+    9) Creamos en src una carpeta reducers      
+    10) Tendremos nuestro archivo llamado pokemons
+        -Donde primero vamos a necesitar nuestro initialState
+        -Nuestro initialState es recomendable que sea un objeto clave valor
+        -Este pokemon lo sacabamos del estado, desde la propiedad pokemon
+        -dejando el initialState como un arreglo vacio
+        -Ahora necesitamos el reducer que es una función puras
+        -Exportamos nuestra función pokemonsReducer
+        -pokemonsReducer recibe el estado actual y el action, que es el 
+          cambio que queremos realizar (es recomendado usar switch)
+        -Nuestro primer caso es el setPokemons, así que immportamos ese 
+          type
+        -retornamos nuestro nuevo estado, usando el concepto de inmutabilidad
+        -Cuando no conocemos el action type que nos está llegando usamos 
+          simplemente el estado actual, colocandolo por defecto
+    11) Ahora si, integramos redux a nuestro main.jsx o index.js
+        -importando nuestro pokemonsReducer
+        -importamos tambien el provider de Redux 
+        -y el legacy_createStore
+
+    12) creamos el store, utilizamos este método y aquí dice que le debemos pasar el reducer.
+        - Ya sabemos que buscamos nuestro pokemonsReducer
+    
+    13) Envolvemos el app en el provider que recibe como prop el Store 
+
+    14) pasamos las props al App(pokemos, setPokemons).         
+
+
+    
