@@ -262,3 +262,91 @@ el estado de nuestra aplicación. Para usarlos se necesita:
     
     *useDispatch: nos retorna una referencia del dispatcher del store de 
     redux el cual usamos para disparar acciones.
+
+  * Redux DevTool
+
+    Redux DevTools es una herramienta de desarrollo para aplicaciones 
+    Redux. 
+    
+    -Ofrece varias funcionalidades útiles para los desarrolladores, como:
+
+    -Monitorización en tiempo real del estado de la aplicación: 
+      permite ver cómo cambia el estado de la aplicación en función de 
+      las acciones dispatches y las transformaciones de los reducers.
+
+    -Debugging: permite hacer un seguimiento de las acciones y ver cómo 
+      cambian los valores del estado.
+
+    -Reproducción: permite retroceder y avanzar en el tiempo para ver 
+      cómo el estado de la aplicación cambió a lo largo del tiempo.
+
+    -Persistencia: permite guardar y cargar el estado de la aplicación 
+      para continuar el desarrollo y debugging después de una recarga 
+      de la página.
+
+    -Integración con la línea de comandos: permite integrarse con otras 
+      herramientas de desarrollo y scripts.
+
+    Para habilitarlo agreamos la siguiente linea al crear el store:
+
+      const store = createStore(
+        pokemonsReducer,
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+      );
+
+      forma actual:
+
+      import { configureStore } from'@reduxjs/toolkit';
+      import pokemonReducer from'./features/pokemonSlice';
+      import { logActions } from'../middlewares';
+
+
+      export const store = configureStore({
+        reducer: {
+          pokemon: pokemonReducer,
+        },
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logActions),
+      })
+
+  **Middlewares:
+      Es una pieza de código que se ejecuta cuando X recibe un request y 
+      ese mismo X da respuesta al request.
+
+      Ayuda a los desarrolladores a diseñar aplicaciones con mayor 
+      eficiencia. 
+      
+      Además, actúa como hilo conductor entre las aplicaciones, 
+      los datos y los usuarios.
+
+        Los podemos usar para:
+
+        Hacer logs de errores
+
+        Hacer fetch de data
+
+        Depurar nuestra aplicación
+
+        También podemos customizar nuestra data con applyMiddleware
+
+      *Currying es una técnica de programación funcional que permite 
+      transformar una función que toma múltiples argumentos en una 
+      secuencia de funciones que toman un solo argumento cada una.
+
+        El objetivo de currying es hacer que las funciones sean más 
+        reutilizables y componibles, permitiendo a los desarrolladores 
+        crear funciones más específicas a partir de funciones más generales.
+
+
+      *Currificación es una transformación que hace que f(a, b, c) sea 
+      invocable como f(a)(b)(c). 
+      
+        -Las implementaciones de JavaScript generalmente mantienen la 
+        función invocable normalmente y devuelven el parcial si el 
+        conteo de argumentos no es suficiente.
+
+        -La currificación nos permite obtener parciales fácilmente. 
+        Como hemos visto en el ejemplo de registro, después de aplicar 
+        currificación a la función universal de tres argumentos 
+        log(fecha, importancia, mensaje) 
+        nos da parciales cuando se llama con un argumento (como log(fecha)) 
+        o dos argumentos (como log(fecha, importancia)).    

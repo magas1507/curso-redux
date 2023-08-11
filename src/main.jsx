@@ -4,9 +4,16 @@ import App from './App.jsx'
 import './index.css'
 import { pokemonsReducers } from './reducers/pokemons.jsx';
 import { Provider } from 'react-redux';
-import { legacy_createStore } from 'redux';
+import { applyMiddleware, compose, legacy_createStore } from 'redux';
+import { logger } from './middlewares/index.jsx';
 
-const store = legacy_createStore(pokemonsReducers)
+const composedEnhancers = compose(
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  applyMiddleware(logger)
+);
+
+const store = legacy_createStore(pokemonsReducers, composedEnhancers);
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
