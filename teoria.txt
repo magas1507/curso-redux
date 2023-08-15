@@ -349,4 +349,116 @@ el estado de nuestra aplicación. Para usarlos se necesita:
         currificación a la función universal de tres argumentos 
         log(fecha, importancia, mensaje) 
         nos da parciales cuando se llama con un argumento (como log(fecha)) 
-        o dos argumentos (como log(fecha, importancia)).    
+        o dos argumentos (como log(fecha, importancia)).      
+
+***Redux Thunk
+    Es un Middleware que extiende las capacidades del store (enhancer), nos 
+    permite realizar acciones asíncronas en nuestros actions creators que 
+    por defecto no podemos hacer
+    Thunk es un concepto de programación donde se utiliza una función intermedia para retrasar la evaluación o ejecución de una operación, como puede ser la petición de una data a una API y demás acciones
+    para este caso en particular separaremos responsabilidades, delegando la petición a la API a nuestro action creator y no a el componente como se venia trabajando
+
+    Instalación
+
+      npm install redux-thunk
+
+    Integración
+      simplemente debemos importarlo y añadirlo a nuestra composición de 
+      middlewares
+      src/index.js:
+
+    import thunk from 'redux-thunk'; 
+    .....
+    ....
+    ...
+    .
+
+
+    const composeEnhancers = compose( 
+      applyMiddleware(thunk, logger)  // **
+    )
+
+    const store = createStore(
+        pokemonsReducer,
+        composeEnhancers    
+      )
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </React.StrictMode>
+    )
+    si estamos haciendo uso de la herramienta Redux DevTools debemos hacer pasos adicionales
+    src/index.js:
+
+    import thunk from 'redux-thunk';
+    .....
+    ...
+    .
+
+
+    const composeAlt = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE_ || compose 
+
+    const composeEnhancers = composeAlt( 
+      applyMiddleware(thunk, logger) 
+    )
+
+    const store = createStore(
+        pokemonsReducer,
+        composeEnhancers    
+      )
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(
+      <React.StrictMode>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </React.StrictMode>
+    )
+    Creación action creator
+      una vez integrado procederemos a crear nuestro action creator que 
+      será una función la cual contendrá la petición a la API que veníamos
+      trabajando, esa función hará la petición a la API, obtendrá su 
+      respuesta y devolverá otra función la cual recibe como parámetro el 
+      dispatch para poder disparar acciones, este dispatch recibirá como 
+      parámetro la acción setPokemons que a su vez recibirá como parámetro
+      la respuesta de la petición a la API
+    
+    src/actions/index.js:
+
+    export const getPokemonsWithDetails = (pokemons = [])=> 
+    async (dispatch)=> { 
+        const pokemonsDetailed = await Promise.all(pokemons.map(pokemon => getPokemonDetail(pokemon)))
+        dispatch(setPokemons(pokemonsDetailed))
+    }
+    Separación de responsabilidades
+      una vez creada el action creator lo importamos y podemos hacer 
+      dispatch con el pasándole como parámetro nuestro arreglo de objetos 
+      de pokemones
+    
+    src/App.js:
+
+    const App = () => {
+      const pokemons = useSelector(state => state.pokemons)
+      const dispatch = useDispatch()
+
+
+      useEffect(()=> {
+        const fetchPokemons = async ()=> {
+          const pokemonsRes = await getPokemon()
+          dispatch(getPokemonsWithDetails(pokemonsRes)) // **
+        }
+
+        fetchPokemons()
+      }, [])
+
+      return (
+        <div className="App">
+          ....
+        </div>
+      );
+    }

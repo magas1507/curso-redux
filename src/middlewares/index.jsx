@@ -3,11 +3,11 @@ export const logger = (store) => (next) => (action) => {
   next(action);
 };
 
-export const featuring = (store) => (next) => (actionInfo) =>{
-  const featured = [{name: 'Josefino'}, ...actionInfo.action.payload ];
-  const updateactionInfo = {
+export const featuring = (store) => (next) => (actionInfo) => {
+  const featured = [{ name: 'eddie' }, ...actionInfo.action.payload];
+  const updatedActionInfo = {
     ...actionInfo,
     action: { ...actionInfo.action, payload: featured },
   };
-  next(updateactionInfo);
-}
+  next(updatedActionInfo);
+};

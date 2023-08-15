@@ -6,13 +6,13 @@ import { pokemonsReducers } from './reducers/pokemons.jsx';
 import { Provider } from 'react-redux';
 import { applyMiddleware, compose, legacy_createStore } from 'redux';
 import { logger } from './middlewares/index.jsx';
+import thunk from 'redux-thunk';
 
-const composedEnhancers = compose(
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(logger)
-);
+const composeAlt = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = legacy_createStore(pokemonsReducers, composedEnhancers);
+const composedEnhancers = composeAlt(applyMiddleware(thunk, logger));
+
+const store = legacy_createStore(pokemonsReducers , composedEnhancers);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
