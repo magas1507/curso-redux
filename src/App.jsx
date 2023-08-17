@@ -16,8 +16,11 @@ function App() {
   
   //recibe el estado y retorna el valor que quiere retornar de ese state
   // Es decir la lista de pokemons
-  const pokemons = useSelector(state => state.pokemons);
-  const loading = useSelector(state => state.loading)
+  //const pokemons = useSelector(state => state.pokemons);
+  const pokemons = useSelector((state) => state.get('pokemons')).toJS();
+
+  //const loading = useSelector(state => state.loading)
+  const loading = useSelector((state) => state.get('loading'));
 
   //necesitamos el dispatch
   const dispatch = useDispatch();

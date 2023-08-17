@@ -462,3 +462,10 @@ el estado de nuestra aplicación. Para usarlos se necesita:
         </div>
       );
     }
+
+    ***nmutabilidad
+    ¿Qué es inmutabilidad?
+    Algo que no puede ser cambiado después de su creación. - RAE
+
+    Redux no rendirazá la UI si no hay cambios entre el estado 
+    inicial y el estado final.
