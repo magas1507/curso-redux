@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 //import { connect } from 'react-redux';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Col, Spin } from 'antd';
 import Searcher from './components/Searcher';
 import PokemonList from './components/PokemonList';
@@ -11,18 +11,12 @@ import './App.css';
 //import { setPokemons as setPokemonsActions} from './actions';
 import { setPokemons } from './actions';
 import thunk from 'redux-thunk';
+
 // function App({pokemons, setPokemons}) {
 function App() {
-  
-  //recibe el estado y retorna el valor que quiere retornar de ese state
-  // Es decir la lista de pokemons
-  //const pokemons = useSelector(state => state.pokemons);
-  const pokemons = useSelector((state) => state.get('pokemons')).toJS();
+  const pokemons = useSelector((state) => state.getIn(['data','pokemons'],shallowEqual)).toJS()
+  const loading = useSelector((state) => state.getIn(['ui','loading']));
 
-  //const loading = useSelector(state => state.loading)
-  const loading = useSelector((state) => state.get('loading'));
-
-  //necesitamos el dispatch
   const dispatch = useDispatch();
 
   useEffect(() => {
