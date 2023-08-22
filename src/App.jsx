@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { Col, Spin } from 'antd';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import Searcher from './components/Searcher';
 import PokemonList from './components/PokemonList';
 import logo from './statics/logo.svg';
@@ -8,14 +8,12 @@ import { fetchPokemonsWithDetails } from './slices/dataSlice';
 import './App.css';
 
 function App() {
-  const pokemons = useSelector((state) => 
-    state.data.pokemonsSearchs,shallowEqual
-  )
-  const loading = useSelector((state)=> state.ui.loading);
-
   
-  const dispatch = useDispatch();
+  const state = useSelector((state) => state.data, shallowEqual)
+  const {loading}= useSelector((state) => state.ui, shallowEqual);
 
+  const dispatch = useDispatch();
+ 
   useEffect(() => {
     dispatch(fetchPokemonsWithDetails());
   }, []);
@@ -28,13 +26,15 @@ function App() {
       <Col span={8} offset={8}>
         <Searcher />
       </Col>
-      {loading ?(
+      {loading ? (
         <Col offset={12}>
-          <Spin spinning size='large'/>
+          <Spin spinning size='large' />
         </Col>
-      ):(
-        <PokemonList pokemons={pokemons} />)}
+      ) : (
+        <PokemonList pokemons={state.isSearch ? state.searchPokemons : state.pokemons} />
+      )}
     </div>
   );
 }
+
 export default App;

@@ -1,19 +1,24 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  loading: false
-};
+  loading: false,
+  bgColor: false,
+}
 
 export const uiSlice = createSlice({
   name: 'ui',
   initialState,
-  reducers:{
-    setLoading:(state, action) =>{
+  reducers: {
+    setLoading: (state, action) => {
       state.loading = action.payload;
-    }
-  }
-});
+    },
 
-export const { setLoading } = uiSlice.actions;
+    setBgColor: (state, action) => {
+      state.bgColor = action.payload;
+    },
+  },
+})
+
+export const { setLoading, setBgColor } = uiSlice.actions;
 
 export default uiSlice.reducer;
